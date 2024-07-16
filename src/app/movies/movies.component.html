@@ -1,0 +1,11 @@
+<div *ngif="popularMovies.length">
+    <h2>Popular movies</h2>
+    <div>
+        <ul>
+            <li *ngFor="let movie of popularMovies">
+                <h3>{{ movie.original_title }}</h3>
+                <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}">
+            </li>
+        </ul>
+    </div>
+</div>
