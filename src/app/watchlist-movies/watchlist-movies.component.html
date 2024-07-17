@@ -1,8 +1,8 @@
-<div *ngIf="popularMovies.length">
-    <h2>Popular movies</h2>
+<div *ngIf="watchlistMovies.length">
+    <h2>Watchlist movies</h2>
     <div>
         <ol>
-            <li *ngFor="let movie of popularMovies">
+            <li *ngFor="let movie of watchlistMovies">
                 <h3>{{ movie.original_title }}</h3>
                 <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" width="200" height="200">
             </li>

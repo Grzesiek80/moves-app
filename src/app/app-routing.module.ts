@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MoviesComponent } from './movies/movies.component';
+import { FavoriteTvComponent } from './favorite-tv/favorite-tv.component';
+import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.component';
 
 const routes: Routes = [
   { path: 'movies', component: MoviesComponent },
+  { path: 'favorite-tv', component: FavoriteTvComponent },
+  { path: 'watchlist-movies', component: WatchlistMoviesComponent },
   { path: '**', redirectTo: '/movies'},
 ];
 

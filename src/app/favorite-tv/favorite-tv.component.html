@@ -1,0 +1,11 @@
+<div *ngIf="favoriteTv.length">
+    <h2>Favorites TV</h2>
+    <div>
+        <ol>
+            <li *ngFor="let movie of favoriteTv">
+                <h3>{{ movie.original_name }}</h3>
+                <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.name}}" width="200" height="200">
+            </li>
+        </ol>
+    </div>
+</div>

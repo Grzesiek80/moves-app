@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+
+        <ul class="nav nav-underline">
+            <li *ngFor="let link of links" class="nav-item">
+                <a mat-button class="nav-link" [routerLink]="link.path" routerLinkActive="active">
+                <p>{{link.title}}</p>
+            </a>
+            </li>
+        </ul>
+<div class="container mt-3">
+    <router-outlet></router-outlet>
+</div>
+
