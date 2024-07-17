@@ -1,10 +1,12 @@
 <div *ngIf="popularMovies.length">
-    <h2>Popular movies</h2>
+    <h3>Popular movies</h3>
     <div>
         <ol>
             <li *ngFor="let movie of popularMovies">
-                <h3>{{ movie.original_title }}</h3>
+                <h4>{{ movie.original_title }}</h4>
                 <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" width="200" height="200">
+                <button (click)="addMovieToFavorite(movie.id)">dodaj do ulubionych</button>
+                <button (click)="addMovieToWatchlist(movie.id)">dodaj do watch listy</button>
             </li>
         </ol>
     </div>

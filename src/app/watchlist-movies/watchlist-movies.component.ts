@@ -13,11 +13,18 @@ export class WatchlistMoviesComponent implements OnInit {
   constructor(private tmdbService: TmdbService) { }
 
   ngOnInit(): void {
-        this.tmdbService.getWatchlistMovies().subscribe(
-      (data: any) => (this.watchlistMovies = data.results,
-        console.log(data.results)
-      )
-    );
+    this.fetchWatchlist();
   }
+
+  addMovieToWatchlist(movieId: number) {
+    this.tmdbService.updateWatchlist(movieId, false).subscribe((data) => this.fetchWatchlist())
+    console.log(movieId)
+}
+
+ fetchWatchlist() {
+  this.tmdbService.getWatchlistMovies().subscribe(
+    (data: any) => (this.watchlistMovies = data.results)
+  );
+}
 
 }

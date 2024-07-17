@@ -20,4 +20,14 @@ export class MoviesComponent implements OnInit {
     );
   }
 
+  addMovieToWatchlist(movieId: number) {
+      this.tmdbService.updateWatchlist(movieId, true).subscribe()
+      console.log(movieId)
+  }
+
+  addMovieToFavorite(movieId: number) {
+    this.tmdbService.updateFavoriteMovies(movieId, true).subscribe()
+    console.log(movieId)
+  }
+
 }

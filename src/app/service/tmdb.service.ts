@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -25,6 +25,30 @@ export class TmdbService implements HttpInterceptor {
 
   getWatchlistMovies(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/account/${environment.account_id}/watchlist/movies`);
+  }
+
+  updateWatchlist(movieId: number, watchlist: boolean): Observable<any> {
+    const body = {
+      media_type: "movie", 
+      media_id: movieId, 
+      watchlist: watchlist
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post(`${environment.apiUrl}/account/${environment.account_id}/watchlist`, body, { headers });
+  }
+
+  updateFavoriteMovies(movieId: number, favorite: boolean): Observable<any> {
+    const body = {
+      media_type: "movie", 
+      media_id: movieId, 
+      favorite: favorite
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post(`${environment.apiUrl}/account/${environment.account_id}/favorite`, body, { headers });
   }
 
 }

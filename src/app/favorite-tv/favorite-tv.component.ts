@@ -13,11 +13,18 @@ export class FavoriteTvComponent implements OnInit {
   constructor(private tmdbService: TmdbService) { }
 
   ngOnInit(): void {
-        this.tmdbService.getFavoriteMovies().subscribe(
-      (data: any) => (this.favoriteTv = data.results,
-        console.log(data.results)
-      )
+    this.fetchavorites();
+  }
+
+  fetchavorites() {
+    this.tmdbService.getFavoriteMovies().subscribe(
+      (data: any) => (this.favoriteTv = data.results)
     );
+  }
+
+  updateFavoriteMovies(movieId: number) {
+    this.tmdbService.updateFavoriteMovies(movieId, false).subscribe((data) => this.fetchavorites())
+    console.log(movieId)
   }
 
 }
