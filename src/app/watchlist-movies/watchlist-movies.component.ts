@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
-import { Observable, switchMap } from 'rxjs';
-import { Movie } from '../models/movie';
+import { catchError, EMPTY, Observable, switchMap, throwError } from 'rxjs';
 import { Result } from '../models/result';
 
 @Component({
@@ -10,37 +9,24 @@ import { Result } from '../models/result';
   styleUrls: ['./watchlist-movies.component.scss'],
 })
 export class WatchlistMoviesComponent implements OnInit {
-  watchlistMovies: Movie[] = [];
 
-  movies!: Observable<Result>;
+  movies: Observable<Result> = EMPTY;
+  error?: string;
 
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.fetchWatchlist();
-    this.movies = this.fetchWatchlist1();
+    this.movies = this.fetchWatchlist();
+  }
+
+  fetchWatchlist(): Observable<Result> {
+    return this.accountService.getWatchlistMovies().pipe(catchError( err => {this.error = err; return throwError(() => new Error(err))}));
   }
 
   updateWatchlist(movieId: number) {
     this.accountService
       .updateWatchlist(movieId, false)
-      .pipe(switchMap((data) => this.accountService.getWatchlistMovies()))
-      .subscribe((data) => (this.watchlistMovies = data.results));
-    console.log(movieId);
-  }
-
-  fetchWatchlist() {
-    this.accountService.getWatchlistMovies().subscribe((data: Result) => (this.watchlistMovies = data.results));
-  }
-
-  fetchWatchlist1(): Observable<Result> {
-    return this.accountService.getWatchlistMovies();
-  }
-
-  updateWatchlist1(movieId: number) {
-    this.accountService
-      .updateWatchlist(movieId, false)
-      .pipe(switchMap((data) => (this.movies = this.accountService.getWatchlistMovies())));
-    console.log(movieId + ' update');
+      .pipe(switchMap((data) => this.movies =this.accountService.getWatchlistMovies()))
+      .subscribe();
   }
 }

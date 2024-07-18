@@ -9,14 +9,16 @@ import { Result } from '../../models/result'
 })
 export class AccountService {
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
+
 
   getFavoriteMovies(): Observable<Result> {
-    return this.http.get<Result>(this.getUrl() + "/favorite/movies");
+    return this.http.get<Result>(this.getUrl() + '/favorite/movies');
   }
 
   getWatchlistMovies(): Observable<Result> {
-    return this.http.get<Result>(this.getUrl() + "/watchlist/movies");
+    return this.http.get<Result>(this.getUrl() + '/watchlist/movies');
   }
 
   updateWatchlist(movieId: number, watchlist: boolean): Observable<any> {
@@ -25,7 +27,7 @@ export class AccountService {
       media_id: movieId,
       watchlist: watchlist,
     };
-    return this.http.post(this.getUrl() + "/watchlist", body);
+    return this.http.post(this.getUrl() + '/watchlist', body);
   }
 
   updateFavoriteMovies(movieId: number, favorite: boolean): Observable<any> {
@@ -34,11 +36,10 @@ export class AccountService {
       media_id: movieId,
       favorite: favorite,
     };
-    return this.http.post(this.getUrl() + "/favorite", body);
+    return this.http.post(this.getUrl() + '/favorite', body);
   }
 
   private getUrl() {
     return `${environment.apiUrl}/account/${environment.account_id}`;
   }
-
 }

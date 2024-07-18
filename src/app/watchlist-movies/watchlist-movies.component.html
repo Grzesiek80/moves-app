@@ -1,8 +1,8 @@
-<div *ngIf="watchlistMovies.length">
+<div *ngIf="movies | async as movies; else loading">
   <h3>Watchlist movies</h3>
   <div>
     <ol>
-      <li *ngFor="let movie of watchlistMovies">
+      <li *ngFor="let movie of movies.results">
         <h4>{{ movie.original_title }}</h4>
         <img
           [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
@@ -15,23 +15,6 @@
     </ol>
   </div>
 </div>
-<div *ngIf="movies | async as movies; else loading">
-  <h3>Watchlist asunc</h3>
-  <div>
-    <ol>
-      <li *ngFor="let movie of movies.results">
-        <h4>{{ movie.original_title }}</h4>
-        <img
-          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-          alt="{{ movie.original_title }}"
-          width="200"
-          height="200"
-        />
-        <button (click)="updateWatchlist1(movie.id)">usuń z listy</button>
-      </li>
-    </ol>
-  </div>
-</div>
 <ng-template #loading>
- <p>Loading..</p>
+  <p>Loading..</p>
 </ng-template>

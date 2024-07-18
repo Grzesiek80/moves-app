@@ -18,16 +18,14 @@ export class MoviesComponent implements OnInit {
   ngOnInit(): void {
     this.movieService
       .getPopularMovies()
-      .subscribe((data: Result) => ((this.popularMovies = data.results), console.log(data.results)));
+      .subscribe((data: Result) => ((this.popularMovies = data.results)));
   }
 
   addMovieToWatchlist(movieId: number) {
     this.accountService.updateWatchlist(movieId, true).subscribe();
-    console.log(movieId);
   }
 
   addMovieToFavorite(movieId: number) {
     this.accountService.updateFavoriteMovies(movieId, true).subscribe();
-    console.log(movieId);
   }
 }
