@@ -5,15 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MoviesComponent } from './movies/movies.component';
 import { FavoriteTvComponent } from './favorite-tv/favorite-tv.component';
-import { TmdbService } from './service/tmdb.service';
+import { TmdbService } from './service/interceptor/tmdb.service';
 import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesComponent,
     FavoriteTvComponent,
-    WatchlistMoviesComponent
+    WatchlistMoviesComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,

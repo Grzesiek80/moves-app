@@ -1,9 +1,8 @@
 <ng-container *ngFor="let link of links">
-    <a [routerLink]="link.path" routerLinkActive="active">
-        <button ngbNavLink>{{link.title}}</button>
-    </a>
+  <a [routerLink]="link.path" routerLinkActive="active">
+    <button ngbNavLink>{{ link.title }}</button>
+  </a>
 </ng-container>
 <div class="container mt-3">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
-

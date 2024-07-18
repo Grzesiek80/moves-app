@@ -1,33 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { TmdbService } from '../service/tmdb.service';
+import { TmdbService } from '../service/interceptor/tmdb.service';
+import { AccountService } from '../service/account/account.service';
+import { MovieService } from '../service/movie/movie.service';
+import { Movie } from '../models/movie';
+import { Result } from '../models/result';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.scss']
+  styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent implements OnInit {
+  popularMovies: Movie[] = [];
 
-  popularMovies: any[] = [];
-
-  constructor(private tmdbService: TmdbService) { }
+  constructor(private movieService: MovieService, private accountService: AccountService) {}
 
   ngOnInit(): void {
-        this.tmdbService.getPopularMovies().subscribe(
-      (data: any) => (this.popularMovies = data.results,
-        console.log(data.results)
-      )
-    );
+    this.movieService
+      .getPopularMovies()
+      .subscribe((data: Result) => ((this.popularMovies = data.results), console.log(data.results)));
   }
 
   addMovieToWatchlist(movieId: number) {
-      this.tmdbService.updateWatchlist(movieId, true).subscribe()
-      console.log(movieId)
+    this.accountService.updateWatchlist(movieId, true).subscribe();
+    console.log(movieId);
   }
 
   addMovieToFavorite(movieId: number) {
-    this.tmdbService.updateFavoriteMovies(movieId, true).subscribe()
-    console.log(movieId)
+    this.accountService.updateFavoriteMovies(movieId, true).subscribe();
+    console.log(movieId);
   }
-
 }

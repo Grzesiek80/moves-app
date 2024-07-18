@@ -1,30 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { TmdbService } from '../service/tmdb.service';
+import { AccountService } from '../service/account/account.service';
+import { Movie } from '../models/movie';
+import { Result } from '../models/result';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-favorite-tv',
   templateUrl: './favorite-tv.component.html',
-  styleUrls: ['./favorite-tv.component.scss']
+  styleUrls: ['./favorite-tv.component.scss'],
 })
 export class FavoriteTvComponent implements OnInit {
+  favoriteTv: Movie[] = [];
 
-  favoriteTv: any[] = [];
-
-  constructor(private tmdbService: TmdbService) { }
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.fetchavorites();
+    this.fetchFavorites();
   }
 
-  fetchavorites() {
-    this.tmdbService.getFavoriteMovies().subscribe(
-      (data: any) => (this.favoriteTv = data.results)
-    );
+  fetchFavorites() {
+    this.accountService.getFavoriteMovies().subscribe((data: Result) => (this.favoriteTv = data.results));
   }
 
   updateFavoriteMovies(movieId: number) {
-    this.tmdbService.updateFavoriteMovies(movieId, false).subscribe((data) => this.fetchavorites())
-    console.log(movieId)
+    console.log(movieId);
+    this.accountService
+    .updateFavoriteMovies(movieId, false)
+    .pipe(switchMap((data) => this.accountService.getFavoriteMovies()))
+    .subscribe((data: Result) => (this.favoriteTv = data.results));
   }
-
 }
