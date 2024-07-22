@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
-import { catchError, EMPTY, finalize, Observable, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
 import { Result } from '../models/result';
 
 @Component({
@@ -25,21 +25,34 @@ export class WatchlistMoviesComponent implements OnInit {
     this.hasError = false;
     this.error = undefined;
     return this.accountService.getWatchlistMovies().pipe(
-      tap(() => {this.hasError = false}),
       catchError((err) => {
-        this.isLoading = false;
-        this.error = err;
+        this.error = err.message;
         this.hasError = true;
         return EMPTY;
       }),
-      finalize(() => {this.isLoading = false})
+      finalize(() => {
+        this.isLoading = false;
+      }),
     );
   }
 
   updateWatchlist(movieId: number) {
+    this.isLoading = true;
+    this.hasError = false;
+    this.error = undefined;
     this.movies = this.accountService
       .updateWatchlist(movieId, false)
-      .pipe(switchMap(() => this.accountService.getWatchlistMovies()));
+      .pipe(
+        catchError((err) => {
+          this.error = err.message;
+          this.hasError = true;
+          return EMPTY;
+        }),
+        switchMap(() => this.accountService.getWatchlistMovies()),
+        finalize(() => {
+          this.isLoading = false;
+        }),
+      );
   }
 
   refreshPage() {

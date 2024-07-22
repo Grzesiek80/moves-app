@@ -1,17 +1,32 @@
-<div *ngIf="favoriteTv.length">
-  <h3>Favorites TV</h3>
-  <div>
-    <ol>
-      <li *ngFor="let movie of favoriteTv">
-        <h4>{{ movie.original_title }}</h4>
-        <img
-          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-          alt="{{ movie.name }}"
-          width="200"
-          height="200"
-        />
-        <button (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
-      </li>
-    </ol>
+<div *ngIf="!isLoading && hasError">
+  <p>Błąd ładowania danych - {{ error }}</p>
+  <button (click)="refreshPage()">Spróbój ponownie</button>
+</div>
+<div *ngIf="isLoading">
+  <p>Loading....</p>
+</div>
+
+<div *ngIf="movies | async as movies">
+  <div *ngIf="!isLoading && !hasError">
+    <h3>Watchlist movies</h3>
+    <div *ngIf="movies.results.length > 0; else noData">
+      <div>
+        <ol>
+          <li *ngFor="let movie of movies.results">
+            <h4>{{ movie.original_title }}</h4>
+            <img
+              [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+              alt="{{ movie.original_title }}"
+              width="200"
+              height="200"
+            />
+            <button (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </div>
+<ng-template #noData>
+  <p>No movies</p>
+</ng-template>
