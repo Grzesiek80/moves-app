@@ -1,61 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
-import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Result } from '../models/result';
+import { BaseMovieList } from '../base.movie.list';
 
 @Component({
   selector: 'app-watchlist-movies',
   templateUrl: './watchlist-movies.component.html',
   styleUrls: ['./watchlist-movies.component.scss'],
 })
-export class WatchlistMoviesComponent implements OnInit {
-  movies: Observable<Result> = EMPTY;
-  error?: string;
-  isLoading: boolean = false;
-  hasError: boolean = false;
+export class WatchlistMoviesComponent extends BaseMovieList implements OnInit {
+  listName: string = 'Watchlist movies';
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.movies = this.fetchWatchlist();
+    this.movies = this.loadMovies();
   }
 
-  fetchWatchlist(): Observable<Result> {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = undefined;
-    return this.accountService.getWatchlistMovies().pipe(
-      catchError((err) => {
-        this.error = err.message;
-        this.hasError = true;
-        return EMPTY;
-      }),
-      finalize(() => {
-        this.isLoading = false;
-      }),
-    );
+  override getMovieList(): Observable<Result> {
+    return this.accountService.getWatchlistMovies();
   }
-
-  updateWatchlist(movieId: number) {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = undefined;
-    this.movies = this.accountService
-      .updateWatchlist(movieId, false)
-      .pipe(
-        catchError((err) => {
-          this.error = err.message;
-          this.hasError = true;
-          return EMPTY;
-        }),
-        switchMap(() => this.accountService.getWatchlistMovies()),
-        finalize(() => {
-          this.isLoading = false;
-        }),
-      );
-  }
-
-  refreshPage() {
-    this.movies = this.fetchWatchlist();
+  override updateList(movieId: number): Observable<any> {
+    return this.accountService.updateWatchlist(movieId, false);
   }
 }

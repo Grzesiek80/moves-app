@@ -1,61 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
 import { Result } from '../models/result';
-import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { BaseMovieList } from '../base.movie.list';
 
 @Component({
   selector: 'app-favorite-tv',
   templateUrl: './favorite-tv.component.html',
   styleUrls: ['./favorite-tv.component.scss'],
 })
-export class FavoriteTvComponent implements OnInit {
-  movies: Observable<Result> = EMPTY;
-  error?: string;
-  isLoading: boolean = false;
-  hasError: boolean = false;
+export class FavoriteTvComponent extends BaseMovieList implements OnInit {
+  listName: string = 'Favorite movies';
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.movies = this.fetchFavorites();
+    this.movies = this.loadMovies();
   }
 
-  fetchFavorites(): Observable<Result> {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = undefined;
-    return this.accountService.getFavoriteMovies().pipe(
-      catchError((err) => {
-        this.error = err.message;
-        this.hasError = true;
-        return EMPTY;
-      }),
-      finalize(() => {
-        this.isLoading = false;
-      }),
-    );
+  override getMovieList(): Observable<Result> {
+    return this.accountService.getFavoriteMovies();
+  }
+  override updateList(movieId: number): Observable<any> {
+    return this.accountService
+      .updateFavoriteMovies(movieId, false);
   }
 
-  updateFavoriteMovies(movieId: number) {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = undefined;
-    this.movies = this.accountService
-      .updateFavoriteMovies(movieId, false)
-      .pipe(
-        catchError((err) => {
-          this.error = err.message;
-          this.hasError = true;
-          return EMPTY;
-        }),
-        switchMap(() => this.accountService.getFavoriteMovies()),
-        finalize(() => {
-          this.isLoading = false;
-        }),
-      );
-  }
-
-  refreshPage() {
-    this.movies = this.fetchFavorites();
-  }
 }

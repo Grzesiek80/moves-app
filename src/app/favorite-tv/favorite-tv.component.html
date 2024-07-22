@@ -8,7 +8,7 @@
 
 <div *ngIf="movies | async as movies">
   <div *ngIf="!isLoading && !hasError">
-    <h3>Watchlist movies</h3>
+    <h3>{{ listName }}</h3>
     <div *ngIf="movies.results.length > 0; else noData">
       <div>
         <ol>
@@ -20,7 +20,7 @@
               width="200"
               height="200"
             />
-            <button (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
+            <button (click)="updateMovies(movie.id)">usuń z listy</button>
           </li>
         </ol>
       </div>
