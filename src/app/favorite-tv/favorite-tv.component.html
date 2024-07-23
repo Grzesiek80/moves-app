@@ -9,20 +9,19 @@
 <div *ngIf="movies | async as movies">
   <div *ngIf="!isLoading && !hasError">
     <h3>Watchlist movies</h3>
-    <div *ngIf="movies.results.length > 0; else noData">
-      <div>
-        <ol>
-          <li *ngFor="let movie of movies.results">
+    <div class="container" *ngIf="movies.results.length > 0; else noData">
+      <div class="row">
+          <div class="d-flex flex-column align-items-center p-2 col-4" *ngFor="let movie of movies.results">
             <h4>{{ movie.original_title }}</h4>
             <img
+              class="img-fluid"
               [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
               alt="{{ movie.original_title }}"
               width="200"
               height="200"
             />
-            <button (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
-          </li>
-        </ol>
+            <button class="btn btn-danger mt-1" (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
+          </div>
       </div>
     </div>
   </div>

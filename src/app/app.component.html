@@ -1,8 +1,10 @@
-<ng-container *ngFor="let link of links">
-  <a [routerLink]="link.path" routerLinkActive="active">
-    <button ngbNavLink>{{ link.title }}</button>
-  </a>
-</ng-container>
+<div class="d-flex justify-content-center gap-2">
+  <ng-container *ngFor="let link of links">
+    <a [routerLink]="link.path" routerLinkActive="active">
+      <button type="button" class="btn btn-dark" ngbNavLink>{{ link.title }}</button>
+    </a>
+  </ng-container>
+</div>
 <div class="container mt-3">
   <router-outlet></router-outlet>
 </div>
