@@ -15,7 +15,7 @@
             <h4>{{ movie.original_title }}</h4>
             <img
               class="img-fluid"
-              [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+              [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path : 'assets/no-image.png'"
               alt="{{ movie.original_title }}"
               width="200"
               height="200"

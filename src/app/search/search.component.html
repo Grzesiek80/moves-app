@@ -1,0 +1,5 @@
+<div class="input-group">
+  <input type="text" class="form-control" [(ngModel)]="query" (keyup.enter)="search()" placeholder="Search for movies..." />
+  <button class="btn btn-outline-secondary" (click)="search()">Search</button>
+</div>
+<app-movie-list [movies]="results | async" [isLoading]="isLoading" [hasError]="hasError" [error]="error"></app-movie-list>

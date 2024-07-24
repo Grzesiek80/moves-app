@@ -10,7 +10,7 @@ import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
 })
 export class FavoriteTvComponent implements OnInit {
   movies: Observable<Result> = EMPTY;
-  error?: string;
+  error: string = "";
   isLoading: boolean = false;
   hasError: boolean = false;
 
@@ -23,7 +23,7 @@ export class FavoriteTvComponent implements OnInit {
   fetchFavorites(): Observable<Result> {
     this.isLoading = true;
     this.hasError = false;
-    this.error = undefined;
+    this.error = "";
     return this.accountService.getFavoriteMovies().pipe(
       catchError((err) => {
         this.error = err.message;
@@ -39,7 +39,7 @@ export class FavoriteTvComponent implements OnInit {
   updateFavoriteMovies(movieId: number) {
     this.isLoading = true;
     this.hasError = false;
-    this.error = undefined;
+    this.error = "";
     this.movies = this.accountService
       .updateFavoriteMovies(movieId, false)
       .pipe(

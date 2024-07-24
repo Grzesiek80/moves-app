@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
 import { MovieService } from '../service/movie/movie.service';
 import { Result } from '../models/result';
-import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
+import { catchError, EMPTY, finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -11,11 +11,11 @@ import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
 })
 export class MoviesComponent implements OnInit {
   movies: Observable<Result> = EMPTY;
-  error?: string;
+  error: string = "";
   isLoading: boolean = false;
   hasError: boolean = false;
 
-  constructor(private movieService: MovieService, private accountService: AccountService) {}
+  constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
     this.movies = this.movieService.getPopularMovies();
@@ -24,7 +24,7 @@ export class MoviesComponent implements OnInit {
   fetchPopularMovies(): Observable<Result> {
     this.isLoading = true;
     this.hasError = false;
-    this.error = undefined;
+    this.error = "";
     return this.movieService.getPopularMovies().pipe(
       catchError((err) => {
         this.error = err.message;
@@ -37,13 +37,6 @@ export class MoviesComponent implements OnInit {
     );
   }
 
-  addMovieToWatchlist(movieId: number) {
-    this.accountService.updateWatchlist(movieId, true).subscribe();
-  }
-
-  addMovieToFavorite(movieId: number) {
-    this.accountService.updateFavoriteMovies(movieId, true).subscribe();
-  }
   refreshPage() {
     this.movies = this.fetchPopularMovies();
   }

@@ -14,4 +14,9 @@ export class MovieService {
   getPopularMovies(): Observable<Result> {
     return this.http.get<Result>(`${environment.apiUrl}/movie/popular?api_key=${environment.apiKey}`);
   }
+
+  searchMovies(query: string): Observable<Result> {
+    const url = `${environment.apiUrl}/search/movie?api_key=${environment.apiKey}&query=${encodeURIComponent(query)}`;
+    return this.http.get<Result>(url);
+  }
 }

@@ -1,15 +1,14 @@
 <div *ngIf="!isLoading && hasError">
   <p>Błąd ładowania danych - {{ error }}</p>
-  <button (click)="refreshPage()">Spróbój ponownie</button>
 </div>
 <div *ngIf="isLoading">
   <p>Loading....</p>
 </div>
-
-<div *ngIf="movies | async as movies">
-  <h3>Popular movies</h3>
-  <div class="container" *ngIf="movies.results.length > 0; else noData">
-    <div class="row">
+<div *ngIf="movies">
+  <div *ngIf="!isLoading && !hasError">
+    <h3>Results</h3>
+    <div class="container" *ngIf="movies.results.length > 0; else noData">
+      <div class="row">
         <div class="d-flex flex-column align-items-center p-2 col-4" *ngFor="let movie of movies.results">
           <h4>{{ movie.original_title }}</h4>
           <img
@@ -21,6 +20,7 @@
           />
           <app-update-movies [movieId]="movie.id"></app-update-movies>
         </div>
+      </div>
     </div>
   </div>
 </div>

@@ -8,6 +8,10 @@ import { FavoriteTvComponent } from './favorite-tv/favorite-tv.component';
 import { TmdbService } from './service/interceptor/tmdb.service';
 import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { SearchComponent } from './search/search.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
+import { FormsModule } from '@angular/forms';
+import { UpdateMoviesComponent } from './update-movies/update-movies.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +19,14 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     MoviesComponent,
     FavoriteTvComponent,
     WatchlistMoviesComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    SearchComponent,
+    MovieListComponent,
+    UpdateMoviesComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule
   ],

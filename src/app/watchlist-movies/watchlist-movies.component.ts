@@ -10,7 +10,7 @@ import { Result } from '../models/result';
 })
 export class WatchlistMoviesComponent implements OnInit {
   movies: Observable<Result> = EMPTY;
-  error?: string;
+  error: string = "";
   isLoading: boolean = false;
   hasError: boolean = false;
 
@@ -23,7 +23,7 @@ export class WatchlistMoviesComponent implements OnInit {
   fetchWatchlist(): Observable<Result> {
     this.isLoading = true;
     this.hasError = false;
-    this.error = undefined;
+    this.error = "";
     return this.accountService.getWatchlistMovies().pipe(
       catchError((err) => {
         this.error = err.message;
@@ -39,7 +39,7 @@ export class WatchlistMoviesComponent implements OnInit {
   updateWatchlist(movieId: number) {
     this.isLoading = true;
     this.hasError = false;
-    this.error = undefined;
+    this.error = "";
     this.movies = this.accountService
       .updateWatchlist(movieId, false)
       .pipe(
