@@ -10,8 +10,11 @@ import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.co
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SearchComponent } from './search/search.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateMoviesComponent } from './update-movies/update-movies.component';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
+import { OrderPizzaComponent } from './order-pizza/order-pizza.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,16 @@ import { UpdateMoviesComponent } from './update-movies/update-movies.component';
     PagenotfoundComponent,
     SearchComponent,
     MovieListComponent,
-    UpdateMoviesComponent
+    UpdateMoviesComponent,
+    OrderPizzaComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }),
   ],
   providers: [{provide: HTTP_INTERCEPTORS,
     useClass: TmdbService,

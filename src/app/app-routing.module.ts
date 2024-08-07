@@ -5,12 +5,14 @@ import { FavoriteTvComponent } from './favorite-tv/favorite-tv.component';
 import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SearchComponent } from './search/search.component';
+import { OrderPizzaComponent } from './order-pizza/order-pizza.component';
 
 const routes: Routes = [
   { path: 'movies', component: MoviesComponent },
   { path: 'favorite-tv', component: FavoriteTvComponent },
   { path: 'watchlist-movies', component: WatchlistMoviesComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'order', component: OrderPizzaComponent },
   { path: '', redirectTo: '/movies', pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent },
 ];

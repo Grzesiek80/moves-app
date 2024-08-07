@@ -1,0 +1,47 @@
+<div class="container">
+  <h1>Order Pizza</h1>
+  <form [formGroup]="pizzaOrderForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" />
+    </div>
+    <div>
+      <label for="address">Address:</label>
+      <input id="address" formControlName="address" />
+    </div>
+    <div>
+      <label for="phone">Phone:</label>
+      <input id="phone" formControlName="phone" />
+    </div>
+
+    <div formArrayName="pizzas">
+      <div *ngFor="let pizza of pizzas.controls; let i = index" [formGroupName]="i">
+        <h3>Pizza {{ i + 1 }}</h3>
+        <div>
+          <label for="type">Type:</label>
+          <select formControlName="type">
+            <option value="margheritha">Margheritha</option>
+            <option value="pepperoni">Pepperoni</option>
+            <option value="hawajska">Hawajska</option>
+          </select>
+        </div>
+        <div>
+          <label>Size:</label>
+          <select formControlName="size">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <div formGroupName="toppings">
+          <label> <input type="checkbox" formControlName="cheese" /> Cheese </label>
+          <label> <input type="checkbox" formControlName="pepperoni" /> Pepperoni </label>
+          <label> <input type="checkbox" formControlName="mushrooms" /> Mushrooms </label>
+        </div>
+        <button type="button" (click)="removePizza(i)">Remove Pizza</button>
+      </div>
+    </div>
+    <button type="button" (click)="addPizza()">Add Pizza</button>
+    <button type="submit" [disabled]="pizzaOrderForm.invalid">Submit Order</button>
+  </form>
+</div>

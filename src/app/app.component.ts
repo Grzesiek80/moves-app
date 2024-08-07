@@ -12,5 +12,6 @@ export class AppComponent {
     { path: '/favorite-tv', icon: 'favoriteTV', title: 'Favorite Movies' },
     { path: '/watchlist-movies', icon: 'watchlistMovies', title: 'Watchlist Movies' },
     { path: '/search', icon: 'search', title: 'Search Movies' },
+    { path: '/order', icon: 'orderPizza', title: 'Order Pizza' },
   ];
 }
