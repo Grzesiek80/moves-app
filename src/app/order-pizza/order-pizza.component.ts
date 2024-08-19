@@ -12,9 +12,9 @@ export class OrderPizzaComponent {
 
   constructor(private fb: FormBuilder) {
     this.pizzaOrderForm = this.fb.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(2)], { updateOn: 'blur' }],
+      address: ['', [Validators.required, Validators.minLength(8)], { updateOn: 'blur' }],
+      phone: ['', [Validators.required, Validators.pattern('^\\d{9}$')], { updateOn: 'blur' }],
       pizzas: this.fb.array([this.createPizza()])
     });
   }
@@ -33,6 +33,17 @@ export class OrderPizzaComponent {
 
   get pizzas(): FormArray {
     return this.pizzaOrderForm.get('pizzas') as FormArray;
+  }
+  get name() {
+    return this.pizzaOrderForm.get('name');
+  }
+
+  get address() {
+    return this.pizzaOrderForm.get('address');
+  }
+
+  get phone() {
+    return this.pizzaOrderForm.get('phone');
   }
 
   addPizza(): void {
