@@ -3,7 +3,12 @@
   <form [formGroup]="pizzaOrderForm" (ngSubmit)="onSubmit()">
     <div>
       <label for="name">Name:</label>
-      <input id="name" formControlName="name" placeholder="Wprowadź swoje imię" [ngClass]="{'input-error': name?.invalid && name?.touched}"/>
+      <input
+        id="name"
+        formControlName="name"
+        placeholder="Wprowadź swoje imię"
+        [ngClass]="{ 'input-error': name?.invalid && name?.touched }"
+      />
       <em *ngIf="name?.invalid && name?.touched">
         <span *ngIf="name?.errors?.['required']" class="error-message">Imię jest wymagane.</span>
         <span *ngIf="name?.errors?.['pattern']" class="error-message">Imię może zawierać tylko litery.</span>
@@ -12,15 +17,26 @@
     </div>
     <div>
       <label for="address">Address:</label>
-      <input id="address" formControlName="address" placeholder="Wprowadź adres" [ngClass]="{'input-error': address?.invalid && address?.touched}"/>
+      <input
+        id="address"
+        formControlName="address"
+        placeholder="Wprowadź adres"
+        [ngClass]="{ 'input-error': address?.invalid && address?.touched }"
+      />
       <em *ngIf="address?.invalid && address?.touched">
         <span *ngIf="address?.errors?.['required']" class="error-message">Adres jest wymagany.</span>
         <span *ngIf="address?.errors?.['minlength']" class="error-message">Adres musi mieć co najmniej 8 znaków.</span>
+        <span *ngIf="pizzaOrderForm.get('address')?.hasError('noOnlySpaces')" class="error-message"> Pole zawiera tylko spacje. </span>
       </em>
     </div>
     <div>
       <label for="phone">Phone:</label>
-      <input id="phone" formControlName="phone" placeholder="Wprowadź telefon" [ngClass]="{'input-error': phone?.invalid && phone?.touched}"/>
+      <input
+        id="phone"
+        formControlName="phone"
+        placeholder="Wprowadź telefon"
+        [ngClass]="{ 'input-error': phone?.invalid && phone?.touched }"
+      />
       <em *ngIf="phone?.invalid && phone?.touched">
         <span *ngIf="phone?.errors?.['required']" class="error-message">Telefon jest wymagany.</span>
         <span *ngIf="phone?.errors?.['pattern']" class="error-message">Telefon musi mieć 9 cufr.</span>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { noOnlySpacesValidator } from '../validator/custom-validators';
 
 @Component({
   selector: 'app-order-pizza',
@@ -13,15 +14,15 @@ export class OrderPizzaComponent {
   constructor(private fb: FormBuilder) {
     this.pizzaOrderForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(2)], { updateOn: 'blur' }],
-      address: ['', [Validators.required, Validators.minLength(8)], { updateOn: 'blur' }],
+      address: ['', [Validators.required, Validators.minLength(8), noOnlySpacesValidator()], { updateOn: 'blur' }],
       phone: ['', [Validators.required, Validators.pattern('^\\d{9}$')], { updateOn: 'blur' }],
       pizzas: this.fb.array([this.createPizza()])
     });
   }
 
-  createPizza(): FormGroup {
+  createPizza(type: string = 'margheritha'): FormGroup {
     return this.fb.group({
-      type: ['margheritha', Validators.required],
+      type: [type, Validators.required],
       size: ['medium', Validators.required],
       toppings: this.fb.group({
         cheese: [false],
