@@ -13,9 +13,9 @@ export class OrderPizzaComponent {
 
   constructor(private fb: FormBuilder) {
     this.pizzaOrderForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(2)], { updateOn: 'blur' }],
-      address: ['', [Validators.required, Validators.minLength(8), noOnlySpacesValidator()], { updateOn: 'blur' }],
-      phone: ['', [Validators.required, Validators.pattern('^\\d{9}$')], { updateOn: 'blur' }],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.minLength(8), noOnlySpacesValidator()]],
+      phone: ['', [Validators.required, Validators.pattern('^\\d{9}$')]],
       pizzas: this.fb.array([this.createPizza()])
     });
   }
