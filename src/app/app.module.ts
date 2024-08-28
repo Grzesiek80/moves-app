@@ -15,6 +15,8 @@ import { UpdateMoviesComponent } from './update-movies/update-movies.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { OrderPizzaComponent } from './order-pizza/order-pizza.component';
+import { PizzaTypeComponent } from './pizza-type/pizza-type.component';
+import { PizzaSizeComponent } from './pizza-size/pizza-size.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { OrderPizzaComponent } from './order-pizza/order-pizza.component';
     SearchComponent,
     MovieListComponent,
     UpdateMoviesComponent,
-    OrderPizzaComponent
+    OrderPizzaComponent,
+    PizzaTypeComponent,
+    PizzaSizeComponent
   ],
   imports: [
     BrowserModule,

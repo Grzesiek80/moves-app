@@ -23,7 +23,7 @@ export class OrderPizzaComponent {
   createPizza(type: string = 'margheritha'): FormGroup {
     return this.fb.group({
       type: [type, Validators.required],
-      size: ['medium', Validators.required],
+      size: ['small', Validators.required],
       toppings: this.fb.group({
         cheese: [false],
         pepperoni: [false],

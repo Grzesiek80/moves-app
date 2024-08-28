@@ -1,0 +1,3 @@
+<select [value]="selectedPizza" (change)="onSelectChange($event)">
+    <option *ngFor="let pizza of pizzaList" [value]="pizza.toLowerCase()">{{ pizza }}</option>
+  </select>

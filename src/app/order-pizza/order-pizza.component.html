@@ -26,7 +26,9 @@
       <em *ngIf="address?.invalid && address?.touched">
         <span *ngIf="address?.errors?.['required']" class="error-message">Adres jest wymagany.</span>
         <span *ngIf="address?.errors?.['minlength']" class="error-message">Adres musi mieć co najmniej 8 znaków.</span>
-        <span *ngIf="pizzaOrderForm.get('address')?.hasError('noOnlySpaces')" class="error-message"> Pole zawiera tylko spacje. </span>
+        <span *ngIf="pizzaOrderForm.get('address')?.hasError('noOnlySpaces')" class="error-message">
+          Pole zawiera tylko spacje.
+        </span>
       </em>
     </div>
     <div>
@@ -48,19 +50,11 @@
         <h3>Pizza {{ i + 1 }}</h3>
         <div>
           <label for="type">Type:</label>
-          <select formControlName="type">
-            <option value="margheritha">Margheritha</option>
-            <option value="pepperoni">Pepperoni</option>
-            <option value="hawajska">Hawajska</option>
-          </select>
+          <app-pizza-type formControlName="type"></app-pizza-type>
         </div>
         <div>
           <label>Size:</label>
-          <select formControlName="size">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select>
+          <app-pizza-size formControlName="size"></app-pizza-size>
         </div>
         <div formGroupName="toppings">
           <label> <input type="checkbox" formControlName="cheese" /> Cheese </label>
