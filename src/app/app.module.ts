@@ -10,13 +10,11 @@ import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.co
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SearchComponent } from './search/search.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { UpdateMoviesComponent } from './update-movies/update-movies.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { OrderPizzaComponent } from './order-pizza/order-pizza.component';
-import { PizzaTypeComponent } from './pizza-type/pizza-type.component';
-import { PizzaSizeComponent } from './pizza-size/pizza-size.component';
+import { OrderPizzaModule } from './order-pizza.module';
 
 @NgModule({
   declarations: [
@@ -28,16 +26,13 @@ import { PizzaSizeComponent } from './pizza-size/pizza-size.component';
     SearchComponent,
     MovieListComponent,
     UpdateMoviesComponent,
-    OrderPizzaComponent,
-    PizzaTypeComponent,
-    PizzaSizeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    OrderPizzaModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }),
   ],
   providers: [{provide: HTTP_INTERCEPTORS,
