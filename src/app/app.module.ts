@@ -32,7 +32,7 @@ import { OrderPizzaModule } from './order-pizza.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    OrderPizzaModule,
+    // OrderPizzaModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }),
   ],
   providers: [{provide: HTTP_INTERCEPTORS,

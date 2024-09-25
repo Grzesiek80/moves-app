@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { noOnlySpacesValidator } from '../validator/custom-validators';
+import { CanComponentDeactivate } from '../unsaved-changes.guard';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-order-pizza',
   templateUrl: './order-pizza.component.html',
   styleUrls: ['./order-pizza.component.scss']
 })
-export class OrderPizzaComponent {
+export class OrderPizzaComponent implements CanComponentDeactivate {
 
   pizzaOrderForm: FormGroup;
+  isFormDirty: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.pizzaOrderForm = this.fb.group({
@@ -18,6 +21,13 @@ export class OrderPizzaComponent {
       phone: ['', [Validators.required, Validators.pattern('^\\d{9}$')]],
       pizzas: this.fb.array([this.createPizza()])
     });
+  }
+
+  canDeactivate(): boolean {
+    if (this.pizzaOrderForm.dirty) {
+      return window.confirm('Masz niezapisane zmiany. Czy na pewno chcesz opuścić tę stronę?');
+    }
+    return true;
   }
 
   createPizza(type: string = 'margheritha'): FormGroup {
@@ -57,6 +67,13 @@ export class OrderPizzaComponent {
 
   onSubmit(): void {
     console.log(this.pizzaOrderForm.value);
+    this.isFormDirty = false;
+    this.resetForm(); 
+  }
+
+  resetForm(): void {
+    this.pizzaOrderForm.reset();
+    this.pizzaOrderForm.setControl('pizzas', this.fb.array([this.createPizza()]));
   }
 
 }

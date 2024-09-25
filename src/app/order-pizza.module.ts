@@ -5,9 +5,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { PizzaSizeComponent } from './pizza-size/pizza-size.component';
 import { PizzaTypeComponent } from './pizza-type/pizza-type.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UnsavedChangesGuard } from './unsaved-changes.guard';
 
 const routes: Routes = [
-  { path: '', component: OrderPizzaComponent }
+  { path: '', 
+    component: OrderPizzaComponent,
+    canDeactivate: [UnsavedChangesGuard]}
 ];
 
 @NgModule({
