@@ -7,12 +7,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [MovieListComponent, CommonModule,
-    FormsModule],
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
+    selector: 'app-search',
+    standalone: true,
+    imports: [MovieListComponent, CommonModule,
+        FormsModule],
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
   query: string = '';

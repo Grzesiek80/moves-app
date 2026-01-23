@@ -4,9 +4,10 @@ import { Result } from '../models/result';
 import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-favorite-tv',
-  templateUrl: './favorite-tv.component.html',
-  styleUrls: ['./favorite-tv.component.scss'],
+    selector: 'app-favorite-tv',
+    templateUrl: './favorite-tv.component.html',
+    styleUrls: ['./favorite-tv.component.scss'],
+    standalone: false
 })
 export class FavoriteTvComponent implements OnInit {
   movies: Observable<Result> = EMPTY;

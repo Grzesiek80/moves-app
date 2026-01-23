@@ -4,9 +4,10 @@ import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
 import { Result } from '../models/result';
 
 @Component({
-  selector: 'app-watchlist-movies',
-  templateUrl: './watchlist-movies.component.html',
-  styleUrls: ['./watchlist-movies.component.scss'],
+    selector: 'app-watchlist-movies',
+    templateUrl: './watchlist-movies.component.html',
+    styleUrls: ['./watchlist-movies.component.scss'],
+    standalone: false
 })
 export class WatchlistMoviesComponent implements OnInit {
   movies: Observable<Result> = EMPTY;

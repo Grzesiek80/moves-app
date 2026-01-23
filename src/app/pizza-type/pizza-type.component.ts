@@ -2,16 +2,17 @@ import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-pizza-type',
-  templateUrl: './pizza-type.component.html',
-  styleUrls: ['./pizza-type.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PizzaTypeComponent),
-      multi: true
-    }
-  ]
+    selector: 'app-pizza-type',
+    templateUrl: './pizza-type.component.html',
+    styleUrls: ['./pizza-type.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PizzaTypeComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class PizzaTypeComponent implements ControlValueAccessor {
 

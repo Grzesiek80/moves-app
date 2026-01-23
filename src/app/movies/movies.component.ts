@@ -7,11 +7,11 @@ import { UpdateMoviesComponent } from '../update-movies/update-movies.component'
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-movies',
-  standalone: true,
-  imports: [UpdateMoviesComponent, CommonModule],
-  templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.scss'],
+    selector: 'app-movies',
+    standalone: true,
+    imports: [UpdateMoviesComponent, CommonModule],
+    templateUrl: './movies.component.html',
+    styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
   movies: Observable<Result> = EMPTY;

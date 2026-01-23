@@ -5,9 +5,10 @@ import { CanComponentDeactivate } from '../unsaved-changes.guard';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-order-pizza',
-  templateUrl: './order-pizza.component.html',
-  styleUrls: ['./order-pizza.component.scss']
+    selector: 'app-order-pizza',
+    templateUrl: './order-pizza.component.html',
+    styleUrls: ['./order-pizza.component.scss'],
+    standalone: false
 })
 export class OrderPizzaComponent implements CanComponentDeactivate {
 
