@@ -3,6 +3,7 @@ import { AccountService } from '../service/account/account.service';
 
 @Component({
   selector: 'app-update-movies',
+  standalone: true,
   templateUrl: './update-movies.component.html',
   styleUrls: ['./update-movies.component.scss']
 })

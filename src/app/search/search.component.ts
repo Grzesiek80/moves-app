@@ -2,9 +2,15 @@ import { Component } from '@angular/core';
 import { MovieService } from '../service/movie/movie.service';
 import { catchError, EMPTY, finalize, Observable } from 'rxjs';
 import { Result } from '../models/result';
+import { MovieListComponent } from '../movie-list/movie-list.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
+  standalone: true,
+  imports: [MovieListComponent, CommonModule,
+    FormsModule],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })

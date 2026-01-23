@@ -3,9 +3,13 @@ import { AccountService } from '../service/account/account.service';
 import { MovieService } from '../service/movie/movie.service';
 import { Result } from '../models/result';
 import { catchError, EMPTY, finalize, Observable } from 'rxjs';
+import { UpdateMoviesComponent } from '../update-movies/update-movies.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movies',
+  standalone: true,
+  imports: [UpdateMoviesComponent, CommonModule],
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })
