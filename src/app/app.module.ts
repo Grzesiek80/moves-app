@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FavoriteTvComponent } from './favorite-tv/favorite-tv.component';
@@ -9,24 +9,16 @@ import { WatchlistMoviesComponent } from './watchlist-movies/watchlist-movies.co
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { FormsModule } from '@angular/forms';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    FavoriteTvComponent,
-    WatchlistMoviesComponent,
-    PagenotfoundComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    // OrderPizzaModule,
-  ],
-  providers: [{provide: HTTP_INTERCEPTORS,
-    useClass: TmdbService,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        FavoriteTvComponent,
+        WatchlistMoviesComponent,
+        PagenotfoundComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        AppRoutingModule], providers: [{ provide: HTTP_INTERCEPTORS,
+            useClass: TmdbService,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
