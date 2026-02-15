@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../service/account/account.service';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { MovieService } from '../service/movie/movie.service';
 import { Result } from '../models/result';
-import { catchError, EMPTY, finalize, Observable } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { UpdateMoviesComponent } from '../update-movies/update-movies.component';
 import { CommonModule } from '@angular/common';
 
@@ -14,34 +13,35 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-  movies: Observable<Result> = EMPTY;
-  error: string = "";
-  isLoading: boolean = false;
-  hasError: boolean = false;
+  private movieService = inject(MovieService);
 
-  constructor(private movieService: MovieService) {}
+  movies = signal<Result | null>(null);
+  error = signal<string>('');
+  isLoading = signal<boolean>(false);
+  hasError = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.movies = this.movieService.getPopularMovies();
+    this.fetchPopularMovies();
   }
 
-  fetchPopularMovies(): Observable<Result> {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = "";
-    return this.movieService.getPopularMovies().pipe(
+  fetchPopularMovies(): void {
+    this.isLoading.set(true);
+    this.hasError.set(false);
+    this.error.set('');
+
+    this.movieService.getPopularMovies().pipe(
       catchError((err) => {
-        this.error = err.message;
-        this.hasError = true;
+        this.error.set(err.message);
+        this.hasError.set(true);
         return EMPTY;
       }),
       finalize(() => {
-        this.isLoading = false;
-      }),
-    );
+        this.isLoading.set(false);
+      })
+    ).subscribe(data => this.movies.set(data));
   }
 
-  refreshPage() {
-    this.movies = this.fetchPopularMovies();
+  refreshPage(): void {
+    this.fetchPopularMovies();
   }
 }

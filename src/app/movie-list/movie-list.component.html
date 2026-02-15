@@ -1,29 +1,33 @@
-<div *ngIf="!isLoading && hasError">
-  <p>Błąd ładowania danych - {{ error }}</p>
-</div>
-<div *ngIf="isLoading">
-  <p>Loading....</p>
-</div>
-<div *ngIf="movies">
-  <div *ngIf="!isLoading && !hasError">
-    <h3>Results</h3>
-    <div class="container" *ngIf="movies.results.length > 0; else noData">
+@if (isLoading()) {
+  <p>Loading...</p>
+} @else if (hasError()) {
+  <p>Błąd ładowania danych - {{ error() }}</p>
+} @else if (movies()) {
+  <h3>Results</h3>
+
+  @if (movies()!.results.length > 0) {
+    <div class="container">
       <div class="row">
-        <div class="d-flex flex-column align-items-center p-2 col-4" *ngFor="let movie of movies.results">
-          <h4>{{ movie.original_title }}</h4>
-          <img
-            class="img-fluid"
-            [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path : 'assets/no-image.png'"
-            alt="{{ movie.original_title }}"
-            width="200"
-            height="200"
-          />
-          <app-update-movies [movieId]="movie.id"></app-update-movies>
-        </div>
+        @for (movie of movies()!.results; track movie.id) {
+          <div class="d-flex flex-column align-items-center p-2 col-4">
+            <h4>{{ movie.original_title }}</h4>
+
+            <img
+              class="img-fluid"
+              [src]="movie.poster_path
+                ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+                : 'assets/no-image.png'"
+              alt="{{ movie.original_title }}"
+              width="200"
+              height="200"
+            />
+
+            <app-update-movies [movieId]="movie.id" />
+          </div>
+        }
       </div>
     </div>
-  </div>
-</div>
-<ng-template #noData>
-  <p>No movies</p>
-</ng-template>
+  } @else {
+    <p>No movies</p>
+  }
+}

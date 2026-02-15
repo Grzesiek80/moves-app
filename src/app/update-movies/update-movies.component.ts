@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
 
 @Component({
@@ -8,11 +8,8 @@ import { AccountService } from '../service/account/account.service';
   styleUrls: ['./update-movies.component.scss']
 })
 export class UpdateMoviesComponent {
-
-  @Input()
-  movieId!: number;
-
-  constructor(private accountService: AccountService) {}
+  movieId = input<number>(0);
+  private accountService = inject(AccountService);
 
   addMovieToWatchlist(movieId: number) {
     this.accountService.updateWatchlist(movieId, true).subscribe();

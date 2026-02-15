@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Result } from '../models/result';
 import { UpdateMoviesComponent } from '../update-movies/update-movies.component';
 import { CommonModule } from '@angular/common';
@@ -12,13 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class MovieListComponent {
 
-  @Input()
-  movies!: Result | null;
-  @Input()
-  isLoading!: boolean;
-  @Input()
-  hasError!: boolean;
-  @Input()
-  error!: string;
+  movies = input<Result | null>(null);
+  isLoading = input<boolean>(false);
+  hasError = input<boolean>(false);
+  error = input<string>('');
 
 }

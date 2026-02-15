@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { MovieService } from '../service/movie/movie.service';
-import { catchError, EMPTY, finalize, Observable } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { Result } from '../models/result';
 import { MovieListComponent } from '../movie-list/movie-list.component';
 import { CommonModule } from '@angular/common';
@@ -15,30 +15,31 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-  query: string = '';
-  results: Observable<Result> = EMPTY;
-  isLoading: boolean = false;
-  error: string = '';
-  hasError: boolean = false;
+  private movieService = inject(MovieService);
 
-  constructor(private movieService: MovieService) {}
+  query = signal<string>('');
+  results = signal<Result | null>(null);
+  isLoading = signal<boolean>(false);
+  error = signal<string>('');
+  hasError = signal<boolean>(false);
 
   search(): void {
-    if (this.query) {
-      this.isLoading = true;
-      this.hasError = false;
-      this.error = '';
-      this.results = this.movieService.searchMovies(this.query).pipe(
+    const searchQuery = this.query();
+    if (searchQuery) {
+      this.isLoading.set(true);
+      this.hasError.set(false);
+      this.error.set('');
+      this.movieService.searchMovies(searchQuery).pipe(
         catchError((err) => {
-          this.error = err.message;
-          this.hasError = true;
+          this.error.set(err.message);
+          this.hasError.set(true);
           return EMPTY;
         }),
         finalize(() => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         }),
-      );
+      ).subscribe(data => this.results.set(data));
     }
-    this.query = '';
+    this.query.set('');
   }
 }
