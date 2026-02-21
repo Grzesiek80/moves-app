@@ -1,5 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-pizza-size',
@@ -12,7 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
             multi: true
         }
     ],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class PizzaSizeComponent implements ControlValueAccessor {
 

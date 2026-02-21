@@ -8,3 +8,15 @@
 <div class="container mt-3">
   <router-outlet></router-outlet>
 </div>
+
+<!-- Toast container -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1200;">
+  <div *ngFor="let t of messages()" class="toast show mb-2" role="alert">
+    <div class="toast-header">
+      <strong class="me-auto">{{ t.type }}</strong>
+      <small class="text-muted">now</small>
+      <button type="button" class="btn-close ms-2 mb-1" (click)="removeToast(t.id)"></button>
+    </div>
+    <div class="toast-body">{{ t.text }}</div>
+  </div>
+</div>

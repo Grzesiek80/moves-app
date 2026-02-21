@@ -1,8 +1,25 @@
 <div class="btn-group mt-1" role="group" aria-label="Basic outlined example">
-  <button type="button" class="btn btn-outline-primary" (click)="addMovieToFavorite(movieId())">
-    dodaj do ulubionych
+  <button
+    type="button"
+    class="btn btn-outline-primary d-flex align-items-center update-icon-btn"
+    (click)="toggleFavorite(movieId())"
+    [title]="favoritesService.isFavorite(movieId()) ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'"
+    data-bs-toggle="tooltip"
+    aria-label="toggle favorite"
+  >
+    <i [class]="(favoritesService.isFavorite(movieId()) ? 'bi bi-star-fill text-warning me-2' : 'bi bi-star me-2') + ' icon-transition'" [title]="favoritesService.isFavorite(movieId()) ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'" data-bs-toggle="tooltip"></i>
+    <span class="visually-hidden">Toggle favorite</span>
   </button>
-  <button type="button" class="btn btn-outline-primary" (click)="addMovieToWatchlist(movieId())">
-    dodaj do watch listy
+
+  <button
+    type="button"
+    class="btn btn-outline-primary d-flex align-items-center update-icon-btn"
+    (click)="toggleWatchlist(movieId())"
+    [title]="watchlistService.isInWatchlist(movieId()) ? 'Usuń z watchlisty' : 'Dodaj do watchlisty'"
+    data-bs-toggle="tooltip"
+    aria-label="toggle watchlist"
+  >
+    <i [class]="(watchlistService.isInWatchlist(movieId()) ? 'bi bi-eye-fill text-primary me-2' : 'bi bi-eye me-2') + ' icon-transition'" [title]="watchlistService.isInWatchlist(movieId()) ? 'Usuń z watchlisty' : 'Dodaj do watchlisty'" data-bs-toggle="tooltip"></i>
+    <span class="visually-hidden">Toggle watchlist</span>
   </button>
 </div>

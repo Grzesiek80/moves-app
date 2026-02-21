@@ -1,31 +1,31 @@
-<div *ngIf="!isLoading && hasError">
-  <p>Błąd ładowania danych - {{ error }}</p>
+@if (!isLoading() && hasError()) {
+  <p>Błąd ładowania danych - {{ error() }}</p>
   <button (click)="refreshPage()">Spróbój ponownie</button>
-</div>
-<div *ngIf="isLoading">
+} @else if (isLoading()) {
   <p>Loading....</p>
-</div>
-
-<div *ngIf="movies | async as movies">
-  <div *ngIf="!isLoading && !hasError">
-    <h3>Watchlist movies</h3>
-    <div class="container" *ngIf="movies.results.length > 0; else noData">
-      <div class="row">
-          <div class="d-flex flex-column align-items-center p-2 col-4" *ngFor="let movie of movies.results">
-            <h4>{{ movie.original_title }}</h4>
-            <img
-              class="img-fluid"
-              [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path : 'assets/no-image.png'"
-              alt="{{ movie.original_title }}"
-              width="200"
-              height="200"
-            />
-            <button class="btn btn-danger mt-1" (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
-          </div>
+} @else if (movies()) {
+  <div>
+    <h3>Favorite movies</h3>
+    @if (movies()!.results.length > 0) {
+      <div class="container">
+        <div class="row">
+          @for (movie of movies()!.results; track movie.id) {
+            <div class="d-flex flex-column align-items-center p-2 col-4">
+              <h4>{{ movie.original_title }}</h4>
+              <img
+                class="img-fluid"
+                [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path : 'assets/no-image.png'"
+                alt="{{ movie.original_title }}"
+                width="200"
+                height="200"
+              />
+              <button class="btn btn-danger mt-1" (click)="updateFavoriteMovies(movie.id)">usuń z listy</button>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    } @else {
+      <p>No movies</p>
+    }
   </div>
-</div>
-<ng-template #noData>
-  <p>No movies</p>
-</ng-template>
+}

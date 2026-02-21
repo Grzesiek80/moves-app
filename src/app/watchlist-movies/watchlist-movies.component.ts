@@ -1,62 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { AccountService } from '../service/account/account.service';
-import { catchError, EMPTY, finalize, Observable, switchMap } from 'rxjs';
+import { WatchlistService } from '../service/watchlist/watchlist.service';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { Result } from '../models/result';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-watchlist-movies',
     templateUrl: './watchlist-movies.component.html',
     styleUrls: ['./watchlist-movies.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class WatchlistMoviesComponent implements OnInit {
-  movies: Observable<Result> = EMPTY;
-  error: string = "";
-  isLoading: boolean = false;
-  hasError: boolean = false;
+  movies = signal<Result | null>(null);
+  error = signal<string>("");
+  isLoading = signal<boolean>(false);
+  hasError = signal<boolean>(false);
+  private watchlistService = inject(WatchlistService);
 
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.movies = this.fetchWatchlist();
+    this.refreshPage();
   }
 
-  fetchWatchlist(): Observable<Result> {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = "";
+  fetchWatchlist() {
+    this.isLoading.set(true);
+    this.hasError.set(false);
+    this.error.set("");
     return this.accountService.getWatchlistMovies().pipe(
       catchError((err) => {
-        this.error = err.message;
-        this.hasError = true;
+        this.error.set(err.message);
+        this.hasError.set(true);
         return EMPTY;
       }),
       finalize(() => {
-        this.isLoading = false;
+        this.isLoading.set(false);
       }),
     );
   }
 
   updateWatchlist(movieId: number) {
-    this.isLoading = true;
-    this.hasError = false;
-    this.error = "";
-    this.movies = this.accountService
-      .updateWatchlist(movieId, false)
-      .pipe(
-        catchError((err) => {
-          this.error = err.message;
-          this.hasError = true;
-          return EMPTY;
-        }),
-        switchMap(() => this.accountService.getWatchlistMovies()),
-        finalize(() => {
-          this.isLoading = false;
-        }),
-      );
+    this.watchlistService.removeFromWatchlist(movieId).subscribe({
+      next: () => {
+        this.refreshPage();
+      },
+      error: (err) => {
+        this.error.set(err.message);
+        this.hasError.set(true);
+      }
+    });
   }
 
   refreshPage() {
-    this.movies = this.fetchWatchlist();
+    this.fetchWatchlist().subscribe(res => {
+      this.movies.set(res);
+    });
   }
 }

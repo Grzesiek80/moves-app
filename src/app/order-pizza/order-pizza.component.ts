@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { noOnlySpacesValidator } from '../validator/custom-validators';
 import { CanComponentDeactivate } from '../unsaved-changes.guard';
 import { Observable } from 'rxjs';
+import { PizzaTypeComponent } from '../pizza-type/pizza-type.component';
+import { PizzaSizeComponent } from '../pizza-size/pizza-size.component';
 
 @Component({
     selector: 'app-order-pizza',
     templateUrl: './order-pizza.component.html',
     styleUrls: ['./order-pizza.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [ReactiveFormsModule, CommonModule, PizzaTypeComponent, PizzaSizeComponent]
 })
 export class OrderPizzaComponent implements CanComponentDeactivate {
 
