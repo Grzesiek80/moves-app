@@ -1,7 +1,7 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, inject } from '@angular/core';
 import { MovieService } from '../service/movie/movie.service';
 import { Result } from '../models/result';
-import { catchError, EMPTY, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize, Subject, takeUntil } from 'rxjs';
 import { UpdateMoviesComponent } from '../update-movies/update-movies.component';
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
     templateUrl: './movies.component.html',
     styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
 
   movies = signal<Result | null>(null);
@@ -20,8 +20,15 @@ export class MoviesComponent implements OnInit {
   isLoading = signal<boolean>(false);
   hasError = signal<boolean>(false);
 
+  private destroy$ = new Subject<void>();
+
   ngOnInit(): void {
     this.fetchPopularMovies();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   fetchPopularMovies(): void {
@@ -37,7 +44,8 @@ export class MoviesComponent implements OnInit {
       }),
       finalize(() => {
         this.isLoading.set(false);
-      })
+      }),
+      takeUntil(this.destroy$)
     ).subscribe(data => this.movies.set(data));
   }
 

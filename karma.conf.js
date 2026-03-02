@@ -37,6 +37,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
+    // Use interactive Chrome for debugging locally (was ChromeHeadless in CI)
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true

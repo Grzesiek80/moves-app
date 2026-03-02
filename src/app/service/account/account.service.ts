@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Result } from '../../models/result'
 
@@ -9,9 +9,20 @@ import { Result } from '../../models/result'
 })
 export class AccountService {
 
+  // BehaviorSubject to hold current account/user state; new subscribers receive latest value
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
+  // Methods to update or clear the current user state
+  setCurrentUser(user: any) {
+    this.currentUserSubject.next(user);
+  }
+
+  clearCurrentUser() {
+    this.currentUserSubject.next(null);
+  }
 
   getFavoriteMovies(): Observable<Result> {
     return this.http.get<Result>(this.getUrl() + '/favorite/movies');

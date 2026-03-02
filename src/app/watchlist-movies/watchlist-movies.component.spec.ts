@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { WatchlistMoviesComponent } from './watchlist-movies.component';
 
@@ -8,7 +12,7 @@ describe('WatchlistMoviesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WatchlistMoviesComponent ]
+      imports: [ WatchlistMoviesComponent, RouterTestingModule, ReactiveFormsModule, CommonModule, HttpClientTestingModule ]
     })
     .compileComponents();
 
